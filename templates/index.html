@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Begrepslæring v2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="user-bar">
+            <span id="user-name" class="user-info">Bruker: {{ session.get('username') }}</span>
+            <a href="/logout" id="logout-link" class="logout-btn">Logg ut</a>
+        </header>
+
+        <!-- Skjemaet starter her og omslutter både knapper og input -->
+        <form action="/lagre-svar" method="POST">
+            
+            <section class="controls top-buttons">
+                <!-- Bruker type="button" for å unngå at denne sender skjemaet -->
+                <button type="button" id="new-term-btn" class="primary-btn" onclick="window.location.href='/index'">
+                    Få et nytt begrep
+                </button>
+                
+                <!-- type="submit" sender alt inne i <form> til /lagre-svar -->
+                <button type="submit" id="save-answer-btn" class="primary-btn">
+                    Lagre svaret mitt og få et nytt begrep
+                </button>
+            </section>
+
+            <main class="grid-layout">
+                <aside class="info-column">
+                    <div class="data-group">
+                        <label>Begrep</label>
+                        <div id="term-display" class="large-display">{{begrep}}</div>
+                    </div>
+
+                    <div class="data-group">
+                        <label>Fag</label>
+                        <div id="subject-display" class="large-display">{{fag}}</div>
+                    </div>
+
+                    <div class="data-group">
+                        <button type="button" id="show-def-btn" class="secondary-btn" data-def="{{definisjon}}">Vis begreps definisjon</button>
+                        <textarea id="db-def" rows="7" readonly placeholder="Trykk på knappen over for å se fasit..."></textarea>
+                    </div>                    
+                </aside>
+
+                <section class="action-column">
+                    <fieldset class="radio-group">
+                        <legend>Mitt valg</legend>
+                        <label><input type="radio" name="mastery" value="ikke" checked>Jeg vet ikke</label>
+                        <label><input type="radio" name="mastery" value="litt">Jeg vet hva det betyr</label>
+                        <label><input type="radio" name="mastery" value="bra">Jeg kan forklare dette</label>
+                    </fieldset>
+
+                    <div class="input-block">
+                        <label for="user-def">Min definisjon</label>
+                        <!-- Lagt til name="bruker_definisjon" -->
+                        <textarea id="user-def" name="bruker_definisjon" rows="4" disabled placeholder="Velg mestringsnivå for å skrive..."></textarea>
+                    </div>
+
+                    <div class="input-block">
+                        <div class="data-group">
+                            <button type="button" id="show-forrige-def-btn" class="secondary-btn" data-forrige-def="{{ forrigedefinisjon }}">Vis/skjul min forrige definisjon</button>
+                        </div>                         
+                        <textarea id="user-forrige-def" name="forrige_definisjon" rows="4" disabled placeholder="Før skrev du ..."></textarea>
+                    </div>
+                </section>
+            </main>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

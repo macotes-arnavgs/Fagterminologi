@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="no">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tilgang - Begrepslæring</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+        <main class="container login-container">
+            <h2 id="form-title">Lag ny konto</h2>
+            
+            {% if melding %}
+            <p class="error-msg">{{ melding }}</p>
+            {% endif %}
+
+            <form method="POST" action="/lagre" class="login-form" id="auth-form">
+                <div class="input-block">
+                    <label>Bruker:</label>
+                    <input type="text" name="navn" required placeholder="Ditt brukernavn">
+                </div>
+                
+                <div class="input-block">
+                    <label>Passord:</label>
+                    <input type="password" name="passord" required placeholder="Ditt passord">
+                </div>
+                
+                <!-- Hovedknapp -->
+                <input type="submit" value="Lag ny konto" class="primary-btn" id="submit-btn">
+            </form>
+        </main>
+
+        <script>
+            function toggleAuthMode() {
+                const title = document.getElementById('form-title');
+                const submitBtn = document.getElementById('submit-btn');
+                const toggleText = document.getElementById('toggle-text');
+                const form = document.getElementById('auth-form');
+
+                if (title.innerText === "Logg inn") {
+                    title.innerText = "Lag ny konto";
+                    submitBtn.value = "Opprett bruker";
+                    form.action = "/register"; // Endrer destinasjon for Python
+                    toggleText.innerHTML = 'Har du allerede konto? <a href="#" onclick="toggleAuthMode()">Logg inn her</a>';
+                } else {
+                    title.innerText = "Logg inn";
+                    submitBtn.value = "Logg inn";
+                    form.action = "/auth";
+                    toggleText.innerHTML = 'Har du ingen konto? <a href="#" onclick="toggleAuthMode()">Registrer deg her</a>';
+                }
+            }
+        </script>
+    </body>
+</html>

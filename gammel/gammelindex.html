@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Begrepslæring v2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="user-bar">
+            <span id="user-name" class="user-info">Bruker: {{ session.get('username') }}</span>
+            <a href="/logout" id="logout-link" class="logout-btn">Logg ut</a>
+        </header>
+
+        <section class="controls top-buttons">
+            <a href="/index">
+                <button id="new-term-btn" class="primary-btn">Få et nytt begrep</button>
+            </a>
+            <a href="/lagre-svar">
+                <button id="save-answer-btn" class="primary-btn">Lagre svaret mitt og få et nytt begrep</button>
+            </a>
+        </section>
+
+        <main class="grid-layout">
+            <aside class="info-column">
+                <div class="data-group">
+                    <label>Begrep</label>
+                    <div id="term-display" class="large-display">{{begrep}}</div>
+                </div>
+
+                <div class="data-group">
+                    <label>Fag</label>
+                    <div id="subject-display" class="large-display">{{fag}}</div>
+                </div>
+            </aside>
+
+            <section class="action-column">
+                <fieldset class="radio-group">
+                    <legend>Mitt valg</legend>
+                    <label><input type="radio" name="mastery" value="ikke" checked>Jeg vet ikke</label>
+                    <label><input type="radio" name="mastery" value="litt">Jeg vet hva det betyr</label>
+                    <label><input type="radio" name="mastery" value="bra">Jeg kan forklare dette</label>
+                </fieldset>
+
+                <div class="input-block">
+                    <label for="user-def">Min definisjon</label>
+                    <textarea id="user-def" rows="4" disabled placeholder="Velg mestringsnivå for å skrive..."></textarea>
+                </div>
+
+                <div class="input-block">
+                    <!-- <button id="show-def-btn" class="secondary-btn">Begreps definisjon</button> -->
+                    <button id="show-def-btn" class="secondary-btn" data-def="{{definisjon}}">Begreps definisjon</button>
+                    <textarea id="db-def" rows="4" readonly placeholder="Trykk på knappen over for å se fasit..."></textarea>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+
+<!--
+<form action="/lagre_svar" method="POST">
+    <section class="controls top-buttons">
+        <button type="button" class="primary-btn" onclick="window.location.href='{{ url_for('index') }}'">Få et nytt!</button>
+        <button type="submit" class="primary-btn">Lagre svaret mitt</button>
+    </section>
+
+    <fieldset class="radio-group">
+        <legend>Mitt valg</legend>
+        <label><input type="radio" name="mastery" value="ikke" checked> Ikke peiling</label>
+        <label><input type="radio" name="mastery" value="litt"> Litt peiling</label>
+        <label><input type="radio" name="mastery" value="bra"> Kan forklare</label>
+    </fieldset>
+
+    <div class="input-block">
+        <label for="user-def">Min definisjon</label>
+        <textarea id="user-def" name="bruker_definisjon" rows="4"></textarea>
+    </div>
+</form>
+-->
